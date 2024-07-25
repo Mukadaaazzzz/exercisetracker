@@ -21,16 +21,23 @@ let exercises = [];
 // Create a new user
 app.post('/api/users', (req, res) => {
   const username = req.body.username;
-  const newUser = { username, _id: users.length + 1 };
+  const newUser = {
+    username: username,
+    _id: users.length + 1
+  };
   users.push(newUser);
   res.json(newUser);
 });
 
 // Get a list of all users
 app.get('/api/users', (req, res) => {
-  const userList = users.map(user => ({ username: user.username, _id: user._id }));
+  const userList = [];
+  for (const user of users) {
+    userList.push({ username: "user.username", _id: "user._id" });
+  }
   res.json(userList);
 });
+
 
 // Add an exercise for a user
 app.post('/api/users/:_id/exercises', (req, res) => {
@@ -43,8 +50,8 @@ app.post('/api/users/:_id/exercises', (req, res) => {
   }
 
   const newExercise = {
-    userId,
-    description,
+    userId: userId,
+    description: description,
     duration: parseInt(duration),
     date: date ? new Date(date).toDateString() : new Date().toDateString()
   };
@@ -86,9 +93,9 @@ app.get('/api/users/:_id/logs', (req, res) => {
     count: log.length,
     _id: user._id,
     log: log.map(({ description, duration, date }) => ({
-      description,
-      duration,
-      date: new Date(date).toDateString()
+      description: description,
+      duration: duration,
+      date: date
     }))
   });
 });
